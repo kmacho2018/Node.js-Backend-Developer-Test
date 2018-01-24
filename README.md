@@ -17,7 +17,7 @@ Description: As a brand new member of Santo Domingo’s police departments’ so
 ###  ``` http://localhost:2000/incidents?Skip=0&Take=3&Sort=Asc```
 #
 
-* POST /incidents/:incidentId/archive```
+* POST /incidents/:incidentId/archive
 ###  Samples:
 ### ``` http://localhost:2000//incidents/{incidentId}/archive```
 

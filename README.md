@@ -6,6 +6,8 @@ For testing the services:
 //POST /incidents
 //Samples:
 //http://localhost:2000/incidents
+
+
 //Use the insertIncidents.html file to support with the POST.
 
 //GET incidents
@@ -16,6 +18,8 @@ For testing the services:
 //POST /incidents/:incidentId/archive
 //Samples:
 //http://localhost:2000//incidents/{incidentId}/archive
+
+
 //Use the archiveIncidents.html file to support with the POST.
 
 //GET /localities
@@ -31,6 +35,8 @@ For testing the services:
 //POST /localities
 //Samples:
 //http://localhost:2000/localities
+
+
 //Use the insertLocalities.html file to support with the POST.
 
 For run Unit test, please execute the command:

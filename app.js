@@ -34,11 +34,25 @@ app.get('/incidents', function (req, res) {
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb://localhost:27017/";
   var re = null;
+
+  var pagination = 100;
+  var sort_ = "Asc";
+
+  if(req.query.Count!=null){
+    pagination = parseInt(req.query.Count);
+  }
+
+  if(req.query.Sort!=null){
+    sort_ = req.query.Sort ;
+  }
+
+  var mysort = { kind: (sort_ == "Asc" ? 1 :  -1) };
+
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db("DbTest");
     var query = { isArchived: false };
-    dbo.collection("Incidents").find(query).toArray(function (err, result) {
+    dbo.collection("Incidents").find(query).sort(mysort).limit(pagination).toArray(function (err, result) {
       if (err) throw err;
       var jaja = {};
       console.log(result);
@@ -89,7 +103,7 @@ app.get('/localities', function (req, res) {
   console.log(req.params);
   var re = null;
 
-  var pagination = 10;
+  var pagination = 100;
   var sort_ = "Asc";
 
   if(req.query.Count!=null){
@@ -107,34 +121,6 @@ app.get('/localities', function (req, res) {
     var dbo = db.db("DbTest");
     var query = {};
     dbo.collection("Localities").find(query).sort(mysort).limit(pagination).toArray(function (err, result) {
-      if (err) throw err;
-      var jaja = {};
-      console.log(result);
-      res.send(result);
-
-      db.close();
-    });
-  });
-
-});
-
-//GET /localities?Count=?
-app.get('/localitiesWithPagination/:cnt', function (req, res) {
-  var MongoClient = require('mongodb').MongoClient;
-  var url = "mongodb://localhost:27017/";
-
-  console.log(req.params);
-  var re = null;
-  MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    var dbo = db.db("DbTest");
-    var query = {};
-    var mysort = { name: 1 };
-
-    console.log(req.query.SortAsc);
-    if(SortAsc)
-
-    dbo.collection("Localities").find(query).limit(parseInt(req.params.cnt)).sort().toArray(function (err, result) {
       if (err) throw err;
       var jaja = {};
       console.log(result);

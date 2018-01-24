@@ -4,36 +4,67 @@ As a brand new member of Santo Domingo’s police departments’ software develo
 For testing the services:
 
 //POST /incidents
+
+
 //Samples:
+
+
 //http://localhost:2000/incidents
 
 
 //Use the insertIncidents.html file to support with the POST.
 
 //GET incidents
+
+
 //incidents?Skip=0&Take=3&Sort=Asc|Desc
+
+
 //Samples:
+
+
 //http://localhost:2000/incidents?Skip=0&Take=3&Sort=Asc
 
+
 //POST /incidents/:incidentId/archive
+
+
 //Samples:
+
+
 //http://localhost:2000//incidents/{incidentId}/archive
 
 
 //Use the archiveIncidents.html file to support with the POST.
 
 //GET /localities
+
+
 //GET /localities?Skip=0&Take=3&Sort=Asc|Desc
+
+
 //Samples:
+
+
 //http://localhost:2000/localities
+
+
 //http://localhost:2000/localities?Skip=0&Take=3&Sort=Desc
 
 //GET /localities/:localityId
+
+
 //Samples:
+
+
 //http://localhost:2000/localities/{localityId}
 
 //POST /localities
+
+
 //Samples:
+
+
 //http://localhost:2000/localities
 
 

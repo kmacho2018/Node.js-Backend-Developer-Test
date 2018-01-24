@@ -3,13 +3,14 @@
        
     </head>
     <body>
-        <form action="http://localhost:3000/incidents/{id}/archive" onsubmit="get_action(this);" method="POST">
-		<input type="text" id="IncidentId" value="">
+        <form onsubmit="get_action(this);" method="POST">
+        <h3>#Incident</h3>
+        <input type="text" id="IncidentId" value="">
         <input type="submit"></input>
         </form>
         <script type="text/javascript">
             function get_action(form) {
-                var url = "http://localhost:3000/incidents/{id}/archive".replace("{id}",document.getElementById("IncidentId").value);
+                var url = "http://localhost:2000/incidents/{id}/archive".replace("{id}",document.getElementById("IncidentId").value);
                 form.action = url;
                 return true;
             }

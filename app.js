@@ -16,48 +16,49 @@ DbTestContext.createDatabase();
 
 DbTestContext.createCollections();
 
-//DbTestContext.insertLocality("Azua");
-
-//DbTestContext.getAllLocalities();
-
-//DbTestContext.insertIncidents("ROBBERY","23TplPdS",new Date(),false);
-
 //POST /incidents
+//Samples:
+//http://localhost:2000/incidents
 app.post('/incidents', function (req, res) {
   DbTestContext.insertIncidents(req.body.kind, req.body.locationId, new Date(), (req.body.isArchived == null ? false : true));
   res.send('Incidente registrado con exito.');
 });
 
 //GET incidents
+//incidents?Skip=0&Take=3&Sort=Asc|Desc
+//Samples:
+//http://localhost:2000/incidents?Skip=0&Take=3&Sort=Asc
 app.get('/incidents', function (req, res) {
 
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb://localhost:27017/";
-  var re = null;
 
-  var pagination = 100;
+  var take = 100;
+  var skip = 0;
   var sort_ = "Asc";
 
-  if(req.query.Count!=null){
-    pagination = parseInt(req.query.Count);
+  if (req.query.Take) {
+    take = parseInt(req.query.Take);
   }
 
-  if(req.query.Sort!=null){
-    sort_ = req.query.Sort ;
+  if (req.query.Skip) {
+    skip = parseInt(req.query.Skip);
   }
 
-  var mysort = { kind: (sort_ == "Asc" ? 1 :  -1) };
+  if (req.query.Sort) {
+    sort_ = req.query.Sort;
+  }
+
+  var mysort = { kind: (sort_ == "Asc" ? 1 : -1) };
 
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db("DbTest");
     var query = { isArchived: false };
-    dbo.collection("Incidents").find(query).sort(mysort).limit(pagination).toArray(function (err, result) {
+    dbo.collection("Incidents").find(query).skip(skip).limit(take).sort(mysort).toArray(function (err, result) {
       if (err) throw err;
-      var jaja = {};
       console.log(result);
       res.send(result);
-
       db.close();
     });
   });
@@ -65,7 +66,8 @@ app.get('/incidents', function (req, res) {
 
 
 //POST /incidents/:incidentId/archive
-
+//Samples:
+//http://localhost:2000//incidents/{incidentId}/archive
 app.post('/incidents/:incidentId/archive', function (req, res) {
 
   var MongoClient = require('mongodb').MongoClient;
@@ -76,56 +78,56 @@ app.post('/incidents/:incidentId/archive', function (req, res) {
     var dbo = db.db("DbTest");
     var id = require('mongodb').ObjectID(req.params.incidentId);
     var query = { "_id": id };
-    var newvalues = { $set: { isArchived: true }};
+    var newvalues = { $set: { isArchived: true } };
     dbo.collection("Incidents").updateOne(query, newvalues, function (err, result) {
       if (err) throw err;
-      console.log("Incident #"+req.params.incidentId+" archived");
-      res.send("Incident #"+req.params.incidentId+" archived");
+      console.log("Incident #" + req.params.incidentId + " archived");
+      res.send("Incident #" + req.params.incidentId + " archived");
       db.close();
     });
 
   });
-  /*DbTestContext.insertIncidents(req.body.kind,req.body.locationId,new Date(),(req.body.isArchived == null ? false : true ));
-  res.send('Incidente registrado con exito.');*/
+
 });
 
 //GET /localities
-//GET /localities?Count=20&Sort=Asc|Desc
+//GET /localities?Skip=0&Take=3&Sort=Asc|Desc
 //Samples:
-//http://localhost:3000/localities?Sort=Desc&Count=1
-//http://localhost:3000/localities?Sort=Asc&Count=1
+//http://localhost:2000/localities
+//http://localhost:2000/localities?Skip=0&Take=3&Sort=Desc
 app.get('/localities', function (req, res) {
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb://localhost:27017/";
-  if(req.params.Count !=null){
-    console.log('hay conteo');
-  }
+
   console.log(req.params);
-  var re = null;
 
   var pagination = 100;
   var sort_ = "Asc";
+  var skip = 0;
+  var take = 0;
 
-  if(req.query.Count!=null){
-    pagination = parseInt(req.query.Count);
+  if (req.query.Take) {
+    take = parseInt(req.query.Take);
   }
 
-  if(req.query.Sort!=null){
-    sort_ = req.query.Sort ;
+  if (req.query.Skip) {
+    skip = parseInt(req.query.Skip);
   }
 
-  var mysort = { name: (sort_ == "Asc" ? 1 :  -1) };
+  if (req.query.Sort) {
+    sort_ = req.query.Sort;
+  }
+
+  var mysort = { name: (sort_ == "Asc" ? 1 : -1) };
 
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db("DbTest");
     var query = {};
-    dbo.collection("Localities").find(query).sort(mysort).limit(pagination).toArray(function (err, result) {
+    dbo.collection("Localities").find(query).skip(skip).limit(take).sort(mysort).toArray(function (err, result) {
       if (err) throw err;
-      var jaja = {};
       console.log(result);
       res.send(result);
-
       db.close();
     });
   });
@@ -133,11 +135,12 @@ app.get('/localities', function (req, res) {
 });
 
 //GET /localities/:localityId
+//Samples:
+//http://localhost:2000/localities/{localityId}
 app.get('/localities/:localityId', function (req, res) {
 
   var MongoClient = require('mongodb').MongoClient;
   var url = "mongodb://localhost:27017/";
-  var re = null;
   MongoClient.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db("DbTest");
@@ -147,22 +150,20 @@ app.get('/localities/:localityId', function (req, res) {
 
     dbo.collection("Localities").find(query).toArray(function (err, result) {
       if (err) throw err;
-      var jaja = {};
       console.log(result);
       res.send(result);
-
       db.close();
     });
   });
 });
 
 //POST /localities
+//Samples:
+//http://localhost:2000/localities
 app.post('/localities', function (req, res) {
-
   DbTestContext.insertLocality(req.body.Locality);
-
   res.send('Se registró la localidad: ' + req.body.Locality);
 });
 
-app.listen(3000);
-console.log('Running on port 3000...');
+app.listen(2000);
+console.log('Running on port 2000...');

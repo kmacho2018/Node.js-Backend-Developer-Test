@@ -3,14 +3,11 @@ Description: As a brand new member of Santo Domingo’s police departments’ so
 
 #### For testing the services
 
-* [Technologies](#technologies)
-* [Instalation](#instalation)
-* [Thats it?](#thats-it)
-* [Credits](#credits)
 
 * POST /incidents
 ``` Samples:```
 ``` http://localhost:2000/incidents```
+
 ``` Use the insertIncidents.html file to support with the POST.```
 * GET incidents
 ``` incidents?Skip=0&Take=3&Sort=Asc|Desc```
@@ -19,6 +16,7 @@ Description: As a brand new member of Santo Domingo’s police departments’ so
 * POST /incidents/:incidentId/archive```
 ``` Samples:```
 ``` http://localhost:2000//incidents/{incidentId}/archive```
+
 ``` Use the archiveIncidents.html file to support with the POST.```
 * GET /localities
 * GET /localities?Skip=0&Take=3&Sort=Asc|Desc
@@ -31,6 +29,7 @@ Description: As a brand new member of Santo Domingo’s police departments’ so
 * POST /localities
 ``` Samples:```
 ``` http://localhost:2000/localities```
+
 ``` Use the insertLocalities.html file to support with the POST.```
 * For run Unit test, please execute the command:
 ``` npm test```
@@ -50,11 +49,9 @@ Description: As a brand new member of Santo Domingo’s police departments’ so
 
 	```node app```
 
-
-
 ## Thats it
 
-yes,Is' ready!.
+yes, the project's ready!.
 
 ## Credits
 Created by Juan Camacho  

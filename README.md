@@ -5,12 +5,12 @@ Description: As a brand new member of Santo Domingo’s police departments’ so
 
 
 * POST /incidents
-* ``` Samples:```
-* ``` http://localhost:2000/incidents```
+### ``` Samples:```
+### ``` http://localhost:2000/incidents```
 
 ``` Use the insertIncidents.html file to support with the POST.```
 #
-#
+
 * GET incidents
 ``` incidents?Skip=0&Take=3&Sort=Asc|Desc```
 * ``` Samples:```
